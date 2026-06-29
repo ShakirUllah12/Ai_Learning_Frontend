@@ -62,12 +62,49 @@ const changePassword = async (passwords) => {
   }
 };
 
+const googleLogin = async (idToken) => {
+  try {
+    const response = await axiosInstance.post(API_PATHS.AUTH.GOOGLE_LOGIN, {
+      idToken,
+    });
+    return response.data.data;
+  } catch (error) {
+    throw error.response?.data || { message: "Google login failed" };
+  }
+};
+
+const forgotPassword = async (email) => {
+  try {
+    const response = await axiosInstance.post(API_PATHS.AUTH.FORGOT_PASSWORD, {
+      email,
+    });
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || { message: "Forgot password request failed" };
+  }
+};
+
+const resetPassword = async (token, password) => {
+  try {
+    const response = await axiosInstance.post(
+      API_PATHS.AUTH.RESET_PASSWORD(token),
+      { password }
+    );
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || { message: "Password reset failed" };
+  }
+};
+
 const authService = {
   login,
   register,
   getProfile,
   updateProfile,
   changePassword,
+  googleLogin,
+  forgotPassword,
+  resetPassword,
 };
 
 export default authService;
