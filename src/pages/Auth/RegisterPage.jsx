@@ -111,9 +111,16 @@ const RegisterPage = () => {
     setLoading(true);
 
     try {
-      await authService.register(username, email, password);
-      toast.success("Registration successful! Please login.");
-      navigate("/login");
+      const response = await authService.register(username, email, password);
+      if (response && response.data) {
+        const { user, token } = response.data;
+        login(user, token);
+        toast.success("Account created successfully! Welcome to dashboard.");
+        navigate("/dashboard");
+      } else {
+        toast.success("Registration successful! Please login.");
+        navigate("/login");
+      }
     } catch (err) {
       const message = err.message || "Failed to register. Please try again.";
       setError(message);

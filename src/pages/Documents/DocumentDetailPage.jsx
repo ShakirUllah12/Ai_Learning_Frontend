@@ -10,6 +10,7 @@ import ChatInterface from "../../components/chat/ChatInterface";
 import AIActions from "../../components/ai/AIActions";
 import FlashcardManager from "../../components/flashcards/FlashcardManager";
 import QuizManager from "../../components/quizzes/QuizManager";
+import { BASE_URL } from "../../utils/apiPath";
 
 const DocumentDetailPage = () => {
   const { id } = useParams();
@@ -54,8 +55,7 @@ const DocumentDetailPage = () => {
       return filePath;
     }
 
-    const baseUrl = import.meta.env.VITE_API_URL || "http://localhost:8000";
-    return `${baseUrl}${filePath.startsWith("/") ? "" : "/"}${filePath}`;
+    return `${BASE_URL}${filePath.startsWith("/") ? "" : "/"}${filePath}`;
   };
 
   const renderContent = () => {
